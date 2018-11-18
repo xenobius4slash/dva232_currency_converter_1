@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Spinner
+        android:id="@+id/currencies_spinner1"
+        android:layout_width="98dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:dropDownWidth="match_parent"
+        android:entries="@array/currencies_array"
+        android:spinnerMode="dialog"
+        app:layout_constraintEnd_toStartOf="@+id/swap_currencies_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/swap_currencies_button" />
+
+    <ImageButton
+        android:id="@+id/swap_currencies_button"
+        android:layout_width="107dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        app:layout_constraintEnd_toStartOf="@+id/currencies_spinner2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/currencies_spinner1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_swap_horiz_24px" />
+
+    <Spinner
+        android:id="@+id/currencies_spinner2"
+        android:layout_width="98dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:dropDownWidth="match_parent"
+        android:entries="@array/currencies_array"
+        android:spinnerMode="dialog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/swap_currencies_button"
+        app:layout_constraintTop_toTopOf="@+id/swap_currencies_button" />
+
+</android.support.constraint.ConstraintLayout>

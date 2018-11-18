@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">DVA232 Currency Converter</string>
+
+    <string-array name="currencies_array">
+        <item name="eur">EUR</item>
+        <item name="sek">SEK</item>
+        <item name="usd">USD</item>
+        <item name="gbp">GBP</item>
+        <item name="cny">CNY</item>
+        <item name="jpy">JPY</item>
+        <item name="krw">KRW</item>
+    </string-array>
+</resources>

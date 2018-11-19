@@ -1,8 +1,12 @@
 package se.mdh.dva232.dva232currencyconverter;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,13 +27,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // left spinner
-        Spinner spinner1 = (Spinner) findViewById(R.id.currencies_spinner1);
+        Spinner spinner1 = findViewById(R.id.currencies_spinner1);
         spinner1.setAdapter(adapter);
         spinner1.setSelection(0);   // init value
         spinner1.setOnItemSelectedListener(this);
 
         // right spinner
-        Spinner spinner2 = (Spinner) findViewById(R.id.currencies_spinner2);
+        Spinner spinner2 = findViewById(R.id.currencies_spinner2);
         spinner2.setAdapter(adapter);
         spinner2.setSelection(1);   // init value
         spinner2.setOnItemSelectedListener(this);
@@ -83,5 +87,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback
+    }
+
+    // Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.conversion_rates:
+                Intent intent = new Intent(this, ConversionRates.class);
+                this.startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">DVA232 Currency Converter</string>
+    <string name="menu_conversion_rates">Conversion rates</string>
+    <string name="menu_about">About</string>
 
     <string-array name="currencies_array">
         <item name="eur">EUR</item>

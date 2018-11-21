@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -37,6 +38,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner2.setAdapter(adapter);
         spinner2.setSelection(1);   // init value
         spinner2.setOnItemSelectedListener(this);
+
+        // button
+        final Button button = findViewById(R.id.button_to_conversion_rates);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                openConversionRates();
+            }
+        });
     }
 
     @Override
@@ -79,9 +89,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
         if( parent.getId() == R.id.currencies_spinner1 ) {
-            Toast.makeText(this, "(left) you selected " + parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
+ //           Toast.makeText(this, "(top) you selected " + parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
         } else if(parent.getId() == R.id.currencies_spinner2 ) {
-            Toast.makeText(this, "(right) you selected " + parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
+ //           Toast.makeText(this, "(bottom) you selected " + parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -102,11 +112,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.conversion_rates:
-                Intent intent = new Intent(this, ConversionRates.class);
-                this.startActivity(intent);
+                openConversionRates();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // open conversion rates activity
+    public void openConversionRates() {
+        Intent intent = new Intent(this, ConversionRates.class);
+        this.startActivity(intent);
     }
 }

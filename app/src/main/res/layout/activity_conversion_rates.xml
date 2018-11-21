@@ -6,4 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".ConversionRates">
 
+    <ListView
+        android:id="@+id/conversion_rates_list_all"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:entries="@array/currencies_array" />
 </android.support.constraint.ConstraintLayout>

@@ -2,15 +2,15 @@
     <string name="app_name">DVA232 Currency Converter</string>
     <string name="menu_conversion_rates">Conversion rates</string>
     <string name="menu_about">About</string>
-    <string name="start_value">0.00</string>
+    <string name="hint_input_value">0.00</string>
 
     <string-array name="currencies_array">
-        <item name="eur">EUR</item>
-        <item name="sek">SEK</item>
-        <item name="usd">USD</item>
-        <item name="gbp">GBP</item>
-        <item name="cny">CNY</item>
-        <item name="jpy">JPY</item>
-        <item name="krw">KRW</item>
+        <item name="eur" id="0">EUR ( &#8364; )</item>
+        <item name="sek" id="1">SEK ( kr )</item>
+        <item name="usd" id="2">USD ( &#36; )</item>
+        <item name="gbp" id="3">GBP ( &#163; )</item>
+        <item name="cny" id="4">CNY ( &#20803; )</item>
+        <item name="jpy" id="5">JPY ( &#165; )</item>
+        <item name="krw" id="6">KRW ( &#8361; )</item>
     </string-array>
 </resources>

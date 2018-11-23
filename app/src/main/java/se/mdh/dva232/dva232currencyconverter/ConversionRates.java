@@ -1,6 +1,7 @@
 package se.mdh.dva232.dva232currencyconverter;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,8 +40,17 @@ public class ConversionRates extends AppCompatActivity {
                 // 1. Instantiate an <code><a href="/reference/android/app/AlertDialog.Builder.html">AlertDialog.Builder</a></code> with its constructor
                 AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
                 // 2. Chain together various setter methods to set the dialog characteristics
-                builder.setMessage("MESSAGE").setTitle("TITEL");
-                // 3. Get the <code><a href="/reference/android/app/AlertDialog.html">AlertDialog</a></code> from <code><a href="/reference/android/app/AlertDialog.Builder.html#create()">create()</a></code>
+                String[] currencySelected = getResources().getStringArray(R.array.EUR);
+                builder.setMessage(currencySelected[0]).setTitle(parent.getItemAtPosition(pos).toString() + " --> ???");
+/*
+                builder.setTitle(parent.getItemAtPosition(pos).toString() + " --> ???").setItems(R.array.EUR, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog_interface, int which) {
+                                Log.d("DIALOG", "TEST");
+                            }
+                        });
+*/
+                        // 3. Get the <code><a href="/reference/android/app/AlertDialog.html">AlertDialog</a></code> from <code><a href="/reference/android/app/AlertDialog.Builder.html#create()">create()</a></code>
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }

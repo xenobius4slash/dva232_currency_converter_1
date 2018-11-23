@@ -19,16 +19,6 @@ public class ConversionRates extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversion_rates);
 
-        /*
-        // resource (array)
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.currencies_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-
-        // listview
-        ListView listview = findViewById(R.id.conversion_rates_list_all);
-        listview.setAdapter(adapter);
-        */
-
         String[] currencies = getResources().getStringArray(R.array.currencies_array);
         ListView mListView = (ListView)findViewById(R.id.conversion_rates_list_all);
         mListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, currencies));
@@ -41,7 +31,6 @@ public class ConversionRates extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
                 // 2. Chain together various setter methods to set the dialog characteristics
                 String output = null;
-                Log.d("SWITCH-INPUT", "pos: " + pos );
                 switch( pos ) {
                     case 0: String[] currencyEUR = getResources().getStringArray(R.array.EUR);
                             output = getStringFromArray(currencyEUR);
@@ -67,15 +56,7 @@ public class ConversionRates extends AppCompatActivity {
                 }
 
                 builder.setMessage(output).setTitle(parent.getItemAtPosition(pos).toString() + " --> ???");
-/*
-                builder.setTitle(parent.getItemAtPosition(pos).toString() + " --> ???").setItems(R.array.EUR, new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog_interface, int which) {
-                                Log.d("DIALOG", "TEST");
-                            }
-                        });
-*/
-                        // 3. Get the <code><a href="/reference/android/app/AlertDialog.html">AlertDialog</a></code> from <code><a href="/reference/android/app/AlertDialog.Builder.html#create()">create()</a></code>
+                // 3. Get the <code><a href="/reference/android/app/AlertDialog.html">AlertDialog</a></code> from <code><a href="/reference/android/app/AlertDialog.Builder.html#create()">create()</a></code>
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
@@ -86,20 +67,5 @@ public class ConversionRates extends AppCompatActivity {
     public String getStringFromArray(String[] array) {
         return "EUR: " + array[0] + "\nSEK: " + array[1] + "\nUSD: "+ array[2] + "\nGBP: "+ array[3] + "\nCNY: "+ array[4] + "\nJPY: "+ array[5] + "\nKRW: "+ array[6];
     }
-
-    /*
-    // Listview
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
-        Toast.makeText(this, "you selected " + parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
-
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
-    }
-    */
-
 
 }

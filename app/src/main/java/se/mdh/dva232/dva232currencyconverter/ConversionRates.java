@@ -40,8 +40,33 @@ public class ConversionRates extends AppCompatActivity {
                 // 1. Instantiate an <code><a href="/reference/android/app/AlertDialog.Builder.html">AlertDialog.Builder</a></code> with its constructor
                 AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
                 // 2. Chain together various setter methods to set the dialog characteristics
-                String[] currencySelected = getResources().getStringArray(R.array.EUR);
-                builder.setMessage(currencySelected[0]).setTitle(parent.getItemAtPosition(pos).toString() + " --> ???");
+                String output = null;
+                Log.d("SWITCH-INPUT", "pos: " + pos );
+                switch( pos ) {
+                    case 0: String[] currencyEUR = getResources().getStringArray(R.array.EUR);
+                            output = getStringFromArray(currencyEUR);
+                            break;
+                    case 1: String[] currencySEK = getResources().getStringArray(R.array.SEK);
+                            output = getStringFromArray(currencySEK);
+                            break;
+                    case 2: String[] currencyUSD = getResources().getStringArray(R.array.USD);
+                            output = getStringFromArray(currencyUSD);
+                            break;
+                    case 3: String[] currencyGBP = getResources().getStringArray(R.array.GBP);
+                            output = getStringFromArray(currencyGBP);
+                        break;
+                    case 4: String[] currencyCNY = getResources().getStringArray(R.array.CNY);
+                            output = getStringFromArray(currencyCNY);
+                        break;
+                    case 5: String[] currencyJPY = getResources().getStringArray(R.array.JPY);
+                            output = getStringFromArray(currencyJPY);
+                        break;
+                    case 6: String[] currencyKRW = getResources().getStringArray(R.array.KRW);
+                            output = getStringFromArray(currencyKRW);
+                        break;
+                }
+
+                builder.setMessage(output).setTitle(parent.getItemAtPosition(pos).toString() + " --> ???");
 /*
                 builder.setTitle(parent.getItemAtPosition(pos).toString() + " --> ???").setItems(R.array.EUR, new DialogInterface.OnClickListener() {
 
@@ -56,6 +81,10 @@ public class ConversionRates extends AppCompatActivity {
             }
         });
 
+    }
+
+    public String getStringFromArray(String[] array) {
+        return "EUR: " + array[0] + "\nSEK: " + array[1] + "\nUSD: "+ array[2] + "\nGBP: "+ array[3] + "\nCNY: "+ array[4] + "\nJPY: "+ array[5] + "\nKRW: "+ array[6];
     }
 
     /*

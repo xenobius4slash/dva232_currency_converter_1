@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- from https://www.oanda.com/ -->
     <string-array name="EUR">
         <item name="EUR">0</item>
         <item name="SEK">10.2671</item>

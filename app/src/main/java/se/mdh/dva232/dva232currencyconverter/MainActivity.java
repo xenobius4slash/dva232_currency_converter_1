@@ -11,12 +11,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
@@ -26,30 +28,66 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public Integer integerCurrency1 = null;
     public String stringCurrency2 = null;
     public Integer integerCurrency2 = null;
+    public Boolean savedInstance = false;
+    public String SAVED_ET1;
+    public String SAVED_ET2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("LIFECYCLE", "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-//      Toast.makeText(this, "onCreate",Toast.LENGTH_SHORT).show();
 
-        // resource (array)
+        Log.d("LIFECYCLE", "onCreate");
+        Log.d("SAVE", "savedInstanceState: " + savedInstanceState);
+        if( savedInstanceState != null ) {
+            Log.d("SAVE", "savedInstanceState != null");
+            savedInstance = true;
+        }
+        setContentView(R.layout.activity_main);
+
+        /*
+         * Menu icon workaround
+         */
+        try {   ViewConfiguration config = ViewConfiguration.get(this);
+                Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+                if (menuKeyField != null) {
+                    menuKeyField.setAccessible(true);
+                    menuKeyField.setBoolean(config, false);
+                }
+        } catch (Exception ignored) { }
+
+        /*
+         * resource (array)
+         */
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.currencies_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // top spinner
+        /*
+         * top spinner
+         */
         Spinner spinner1 = findViewById(R.id.currencies_spinner1);
         spinner1.setAdapter(adapter);
-        spinner1.setSelection(0);   // init value
+
+        if(savedInstanceState!=null && savedInstanceState.containsKey("SP1")) {
+            Log.d("SAVE","key 'SP1' exist");
+            spinner1.setSelection(savedInstanceState.getInt("SP1"));    // saved value
+        } else {
+            Log.d("SAVE","key 'SP1' NOT exist");
+            spinner1.setSelection(0);   // init value
+        }
         spinner1.setOnItemSelectedListener(this);
 
-        // top editText
+        /*
+         * top editText
+         */
         final EditText editText1 = findViewById(R.id.input_value1);
+        if(savedInstanceState!=null && savedInstanceState.containsKey("ET1")) {
+            Log.d("SAVE","key 'ET1' exist");
+            SAVED_ET1 = savedInstanceState.getString("ET1");
+        }
         editText1.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                String resultText;
-                if( editText1.hasFocus() ) {
+                if( editText1.hasFocus() && !savedInstance ) {
+                    String resultText;
                     EditText to = findViewById(R.id.input_value2);
                     resultText = getTextForEditText(s.toString(), 1);
                     to.setText(resultText);
@@ -59,78 +97,122 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
 
-        // bottom spinner
+        /*
+         * bottom spinner
+         */
         Spinner spinner2 = findViewById(R.id.currencies_spinner2);
         spinner2.setAdapter(adapter);
-        spinner2.setSelection(1);   // init value
+        if(savedInstanceState!=null && savedInstanceState.containsKey("SP2")) {
+            Log.d("SAVE","key 'SP2' exist");
+            spinner2.setSelection(savedInstanceState.getInt("SP2"));    // saved value
+        } else {
+            spinner2.setSelection(1);   // init value
+        }
         spinner2.setOnItemSelectedListener(this);
 
-        // bottom editText
+        /*
+         * bottom editText
+         */
         final EditText editText2 = findViewById(R.id.input_value2);
+        if(savedInstanceState!=null && savedInstanceState.containsKey("ET2")) {
+            Log.d("SAVE","key 'ET2' exist");
+            SAVED_ET2 = savedInstanceState.getString("ET2");
+        }
+
         editText2.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                String resultText;
-                if( editText2.hasFocus() ) {
+                if( editText2.hasFocus() && !savedInstance ) {
+                    String resultText;
                     EditText to = findViewById(R.id.input_value1);
                     resultText = getTextForEditText(s.toString(), 2);
                     to.setText(resultText);
-                 }
+                }
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {  }
             public void onTextChanged(CharSequence s, int start, int before, int count) {  }
         });
 
-        // button
+        /*
+         * button
+         */
         final Button button = findViewById(R.id.button_to_conversion_rates);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                openConversionRates();
-            }
-        });
+        Log.d("VISIBILITY", "button: " + button);
+        if( button != null) {
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    openConversionRates();
+                }
+            });
+        }
+
     }
 
     @Override
     protected void onStart() {
         Log.d("LIFECYCLE", "onStart");
         super.onStart();
-//        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onResume() {
         Log.d("LIFECYCLE", "onResume");
         super.onResume();
-//        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onPause() {
         Log.d("LIFECYCLE", "onPause");
         super.onPause();
-//       Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onStop() {
         Log.d("LIFECYCLE", "onStop");
         super.onStop();
-//        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onDestroy() {
         Log.d("LIFECYCLE", "onDestroy");
         super.onDestroy();
-//        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
     }
 
-    // Spinner
+    /*
+     * SaveInstanceState
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        Log.d("SAVE","onSaveInstanceState");
+        Spinner spinner1 = findViewById(R.id.currencies_spinner1);
+        savedInstanceState.putInt("SP1", spinner1.getSelectedItemPosition() );
+        EditText editText1 = findViewById(R.id.input_value1);
+        savedInstanceState.putString("ET1", editText1.getText().toString());
+        Spinner spinner2 = findViewById(R.id.currencies_spinner2);
+        savedInstanceState.putInt("SP2", spinner2.getSelectedItemPosition() );
+        EditText editText2 = findViewById(R.id.input_value2);
+        savedInstanceState.putString("ET2", editText2.getText().toString());
+        Log.d("SAVE", "SP1: " + savedInstanceState.getInt("SP1") + " // ET1: " + savedInstanceState.getString("ET1") + " // SP2: " + savedInstanceState.getInt("SP2") + " // ET2: " + savedInstanceState.getString("ET2"));
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d("SAVE","onRestoreInstanceState");
+        Log.d("SAVE", "onRestoreInstanceState(..) => SAVED_ET1: "+SAVED_ET1+"// SAVED_ET2; " + SAVED_ET2);
+        EditText editText1 = findViewById(R.id.input_value1);
+        editText1.setText( SAVED_ET1 );
+        EditText editText2 = findViewById(R.id.input_value2);
+        editText2.setText( SAVED_ET2 );
+    }
+
+    /*
+     * Spinner
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         if( parent.getId() == R.id.currencies_spinner1 ) {
             stringCurrency1 = parent.getItemAtPosition(pos).toString().substring(0,3);
             integerCurrency1 = pos;
-
             EditText editText1 = findViewById(R.id.input_value1);   // source
             EditText editText2 = findViewById(R.id.input_value2);   // target
             String input = editText1.getText().toString();
@@ -138,19 +220,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         } else if(parent.getId() == R.id.currencies_spinner2 ) {
             stringCurrency2 = parent.getItemAtPosition(pos).toString().substring(0,3);
             integerCurrency2 = pos;
-
             EditText editText1 = findViewById(R.id.input_value1);   // target
             EditText editText2 = findViewById(R.id.input_value2);   // source
             String input = editText2.getText().toString();
             editText1.setText( getTextForEditText(input, 2) );
         }
     }
+    public void onNothingSelected(AdapterView<?> parent) { }
 
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
-    }
-
-    // Menu
+    /*
+     * Menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -221,13 +301,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         return Double.parseDouble(conversionRate);
     }
 
+    /**
+     *
+     * @param d     Double for round (#.##)
+     * @return      Double
+     */
     double roundTwoDecimals(double d)
     {
         DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols();
         otherSymbols.setDecimalSeparator('.');
         DecimalFormat twoDForm = new DecimalFormat("#.##", otherSymbols);
-        Log.d("decimalnumber","roundTwoDecimals #1: " + twoDForm.format(d));
-        Log.d("decimalnumber","roundTwoDecimals #2: " + Double.valueOf(twoDForm.format(d)));
+//        Log.d("decimalnumber","roundTwoDecimals #1: " + twoDForm.format(d));
+//        Log.d("decimalnumber","roundTwoDecimals #2: " + Double.valueOf(twoDForm.format(d)));
         return Double.valueOf(twoDForm.format(d));
     }
 
@@ -244,8 +329,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Double currencyRate = null;
         String resultText;
 
-        if (input.length() > 0) {
+        if (input.length() > 0 && integerCurrency1 != null && integerCurrency2 != null) {
             from = Double.parseDouble(input);
+            Log.d("DEBUG","intCurr1: "+integerCurrency1+" // intCurr2: " + integerCurrency2);
             if( direction == 1) {
                 currencyRate = getCurrencyRate(integerCurrency1, integerCurrency2);
             } else if (direction == 2) {
@@ -260,7 +346,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         } else {
             resultText = "";
         }
-
         return resultText;
     }
 }

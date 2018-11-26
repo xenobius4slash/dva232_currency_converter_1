@@ -33,25 +33,25 @@ public class ConversionRates extends AppCompatActivity {
                 String output = null;
                 switch( pos ) {
                     case 0: String[] currencyEUR = getResources().getStringArray(R.array.EUR);
-                            output = getStringFromArray(currencyEUR);
-                            break;
+                        output = getStringFromArray(currencyEUR);
+                        break;
                     case 1: String[] currencySEK = getResources().getStringArray(R.array.SEK);
-                            output = getStringFromArray(currencySEK);
-                            break;
+                        output = getStringFromArray(currencySEK);
+                        break;
                     case 2: String[] currencyUSD = getResources().getStringArray(R.array.USD);
-                            output = getStringFromArray(currencyUSD);
-                            break;
+                        output = getStringFromArray(currencyUSD);
+                        break;
                     case 3: String[] currencyGBP = getResources().getStringArray(R.array.GBP);
-                            output = getStringFromArray(currencyGBP);
+                        output = getStringFromArray(currencyGBP);
                         break;
                     case 4: String[] currencyCNY = getResources().getStringArray(R.array.CNY);
-                            output = getStringFromArray(currencyCNY);
+                        output = getStringFromArray(currencyCNY);
                         break;
                     case 5: String[] currencyJPY = getResources().getStringArray(R.array.JPY);
-                            output = getStringFromArray(currencyJPY);
+                        output = getStringFromArray(currencyJPY);
                         break;
                     case 6: String[] currencyKRW = getResources().getStringArray(R.array.KRW);
-                            output = getStringFromArray(currencyKRW);
+                        output = getStringFromArray(currencyKRW);
                         break;
                 }
 

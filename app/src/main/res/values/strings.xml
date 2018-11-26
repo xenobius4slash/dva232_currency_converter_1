@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">DVA232 Currency Converter</string>
     <string name="hint_input_value">0.00</string>
+    <string name="dialog_conversion_rates_from">from</string>
+    <string name="dialog_conversion_rates_to">to</string>
 
     <string-array name="currencies_array">
         <item>EUR ( &#8364; )</item>

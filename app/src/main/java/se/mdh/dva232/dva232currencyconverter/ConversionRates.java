@@ -20,8 +20,8 @@ public class ConversionRates extends AppCompatActivity {
         setContentView(R.layout.activity_conversion_rates);
 
         String[] currencies = getResources().getStringArray(R.array.currencies_array);
-        ListView mListView = (ListView)findViewById(R.id.conversion_rates_list_all);
-        mListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, currencies));
+        ListView mListView = findViewById(R.id.conversion_rates_list_all);
+        mListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, currencies));
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent,View view, int pos, long id) {
@@ -54,8 +54,10 @@ public class ConversionRates extends AppCompatActivity {
                         output = getStringFromArray(currencyKRW);
                         break;
                 }
-
-                builder.setMessage(output).setTitle(parent.getItemAtPosition(pos).toString() + " --> ???");
+                String from = getString(R.string.dialog_conversion_rates_from);
+                String fromCurrency = parent.getItemAtPosition(pos).toString();
+                String to = getString(R.string.dialog_conversion_rates_to);
+                builder.setMessage(output).setTitle( getString(R.string.menu_conversion_rates) + " " + from+" "+fromCurrency+" "+to);
                 // 3. Get the <code><a href="/reference/android/app/AlertDialog.html">AlertDialog</a></code> from <code><a href="/reference/android/app/AlertDialog.Builder.html#create()">create()</a></code>
                 AlertDialog dialog = builder.create();
                 dialog.show();
@@ -65,7 +67,8 @@ public class ConversionRates extends AppCompatActivity {
     }
 
     public String getStringFromArray(String[] array) {
-        return "EUR: " + array[0] + "\nSEK: " + array[1] + "\nUSD: "+ array[2] + "\nGBP: "+ array[3] + "\nCNY: "+ array[4] + "\nJPY: "+ array[5] + "\nKRW: "+ array[6];
+        String[] ca = getResources().getStringArray(R.array.currencies_array);
+        return ca[0]+": "+array[0]+"\n"+ca[1]+": "+array[1]+"\n"+ca[2]+": "+array[2]+"\n"+ca[3]+": "+array[3]+"\n"+ca[4]+": "+array[4]+"\n"+ca[5]+": "+array[5]+"\n"+ca[6]+": "+array[6];
     }
 
 }

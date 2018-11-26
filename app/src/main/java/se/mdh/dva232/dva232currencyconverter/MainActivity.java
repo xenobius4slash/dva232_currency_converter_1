@@ -1,5 +1,6 @@
 package se.mdh.dva232.dva232currencyconverter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
@@ -24,13 +26,12 @@ import java.text.DecimalFormatSymbols;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    public String stringCurrency1 = null;
     public Integer integerCurrency1 = null;
-    public String stringCurrency2 = null;
     public Integer integerCurrency2 = null;
     public Boolean savedInstance = false;
     public String SAVED_ET1;
-    public String SAVED_ET2;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     menuKeyField.setBoolean(config, false);
                 }
         } catch (Exception ignored) { }
+
 
         /*
          * resource (array)
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         /*
          * top editText
          */
-        final EditText editText1 = findViewById(R.id.input_value1);
+        final EditText editText1 = findViewById(R.id.input_value);
         if(savedInstanceState!=null && savedInstanceState.containsKey("ET1")) {
             Log.d("SAVE","key 'ET1' exist");
             SAVED_ET1 = savedInstanceState.getString("ET1");
@@ -88,9 +90,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             public void afterTextChanged(Editable s) {
                 if( editText1.hasFocus() && !savedInstance ) {
                     String resultText;
-                    EditText to = findViewById(R.id.input_value2);
-                    resultText = getTextForEditText(s.toString(), 1);
-                    to.setText(resultText);
+                    resultText = getTextForEditText(s.toString());
+                    TextView textView = findViewById(R.id.result);
+                    textView.setText(resultText);
                 }
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -110,27 +112,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         spinner2.setOnItemSelectedListener(this);
 
-        /*
-         * bottom editText
-         */
-        final EditText editText2 = findViewById(R.id.input_value2);
-        if(savedInstanceState!=null && savedInstanceState.containsKey("ET2")) {
-            Log.d("SAVE","key 'ET2' exist");
-            SAVED_ET2 = savedInstanceState.getString("ET2");
-        }
-
-        editText2.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-                if( editText2.hasFocus() && !savedInstance ) {
-                    String resultText;
-                    EditText to = findViewById(R.id.input_value1);
-                    resultText = getTextForEditText(s.toString(), 2);
-                    to.setText(resultText);
-                }
-            }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {  }
-            public void onTextChanged(CharSequence s, int start, int before, int count) {  }
-        });
+        TextView textView = findViewById(R.id.result);
+        Log.d("DEBUG","textView: " + textView.getText().toString());
+        textView.setText(R.string.hint_input_value);
 
         /*
          * button
@@ -151,30 +135,60 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onStart() {
         Log.d("LIFECYCLE", "onStart");
         super.onStart();
+        Spinner spinner1 = findViewById(R.id.currencies_spinner1);
+        Spinner spinner2 = findViewById(R.id.currencies_spinner2);
+        EditText editText1 = findViewById(R.id.input_value);
+        TextView textView = findViewById(R.id.result);
+//        EditText editText2 = findViewById(R.id.input_value2);
+        Log.d("DEBUG", "onStart() => SP1: "+spinner1.getSelectedItemPosition()+" // ET1: "+editText1.getText().toString()+" ("+SAVED_ET1+") // SP2: "+spinner2.getSelectedItemPosition()+" // TV: "+textView.getText().toString());
     }
 
     @Override
     protected void onResume() {
         Log.d("LIFECYCLE", "onResume");
         super.onResume();
+        Spinner spinner1 = findViewById(R.id.currencies_spinner1);
+        Spinner spinner2 = findViewById(R.id.currencies_spinner2);
+        EditText editText1 = findViewById(R.id.input_value);
+        TextView textView = findViewById(R.id.result);
+//        EditText editText2 = findViewById(R.id.input_value2);
+        Log.d("DEBUG", "onResume() => SP1: "+spinner1.getSelectedItemPosition()+" // ET1: "+editText1.getText().toString()+" ("+SAVED_ET1+") // SP2: "+spinner2.getSelectedItemPosition()+" // TV: "+textView.getText().toString());
     }
 
     @Override
     protected void onPause() {
         Log.d("LIFECYCLE", "onPause");
         super.onPause();
+        Spinner spinner1 = findViewById(R.id.currencies_spinner1);
+        Spinner spinner2 = findViewById(R.id.currencies_spinner2);
+        EditText editText1 = findViewById(R.id.input_value);
+        TextView textView = findViewById(R.id.result);
+//        EditText editText2 = findViewById(R.id.input_value2);
+        Log.d("DEBUG", "onPause() => SP1: "+spinner1.getSelectedItemPosition()+" // ET1: "+editText1.getText().toString()+" ("+SAVED_ET1+") // SP2: "+spinner2.getSelectedItemPosition()+" // TV: "+textView.getText().toString());
     }
 
     @Override
     protected void onStop() {
         Log.d("LIFECYCLE", "onStop");
         super.onStop();
+        Spinner spinner1 = findViewById(R.id.currencies_spinner1);
+        Spinner spinner2 = findViewById(R.id.currencies_spinner2);
+        EditText editText1 = findViewById(R.id.input_value);
+        TextView textView = findViewById(R.id.result);
+//        EditText editText2 = findViewById(R.id.input_value2);
+        Log.d("DEBUG", "onStop() => SP1: "+spinner1.getSelectedItemPosition()+" // ET1: "+editText1.getText().toString()+" ("+SAVED_ET1+") // SP2: "+spinner2.getSelectedItemPosition()+" // TV: "+textView.getText().toString());
     }
 
     @Override
     protected void onDestroy() {
         Log.d("LIFECYCLE", "onDestroy");
         super.onDestroy();
+        Spinner spinner1 = findViewById(R.id.currencies_spinner1);
+        Spinner spinner2 = findViewById(R.id.currencies_spinner2);
+        EditText editText1 = findViewById(R.id.input_value);
+        TextView textView = findViewById(R.id.result);
+//        EditText editText2 = findViewById(R.id.input_value2);
+        Log.d("DEBUG", "onDestroy() => SP1: "+spinner1.getSelectedItemPosition()+" // ET1: "+editText1.getText().toString()+" ("+SAVED_ET1+") // SP2: "+spinner2.getSelectedItemPosition()+" // TV: "+textView.getText().toString());
     }
 
     /*
@@ -185,13 +199,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Log.d("SAVE","onSaveInstanceState");
         Spinner spinner1 = findViewById(R.id.currencies_spinner1);
         savedInstanceState.putInt("SP1", spinner1.getSelectedItemPosition() );
-        EditText editText1 = findViewById(R.id.input_value1);
+        EditText editText1 = findViewById(R.id.input_value);
         savedInstanceState.putString("ET1", editText1.getText().toString());
         Spinner spinner2 = findViewById(R.id.currencies_spinner2);
         savedInstanceState.putInt("SP2", spinner2.getSelectedItemPosition() );
-        EditText editText2 = findViewById(R.id.input_value2);
-        savedInstanceState.putString("ET2", editText2.getText().toString());
-        Log.d("SAVE", "SP1: " + savedInstanceState.getInt("SP1") + " // ET1: " + savedInstanceState.getString("ET1") + " // SP2: " + savedInstanceState.getInt("SP2") + " // ET2: " + savedInstanceState.getString("ET2"));
+//        Log.d("SAVE", "SP1: " + savedInstanceState.getInt("SP1") + " // ET1: " + savedInstanceState.getString("ET1") + " // SP2: " + savedInstanceState.getInt("SP2") + " // ET2: " + savedInstanceState.getString("ET2"));
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -199,11 +211,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         Log.d("SAVE","onRestoreInstanceState");
-        Log.d("SAVE", "onRestoreInstanceState(..) => SAVED_ET1: "+SAVED_ET1+"// SAVED_ET2; " + SAVED_ET2);
-        EditText editText1 = findViewById(R.id.input_value1);
+//        Log.d("SAVE", "onRestoreInstanceState(..) => SAVED_ET1: "+SAVED_ET1+"// SAVED_ET2; " + SAVED_ET2);
+        EditText editText1 = findViewById(R.id.input_value);
         editText1.setText( SAVED_ET1 );
-        EditText editText2 = findViewById(R.id.input_value2);
-        editText2.setText( SAVED_ET2 );
+//        EditText editText2 = findViewById(R.id.input_value2);
+//        editText2.setText( SAVED_ET2 );
     }
 
     /*
@@ -211,20 +223,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      */
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         if( parent.getId() == R.id.currencies_spinner1 ) {
-            stringCurrency1 = parent.getItemAtPosition(pos).toString().substring(0,3);
             integerCurrency1 = pos;
-            EditText editText1 = findViewById(R.id.input_value1);   // source
-            EditText editText2 = findViewById(R.id.input_value2);   // target
-            String input = editText1.getText().toString();
-            editText2.setText( getTextForEditText(input, 1) );
         } else if(parent.getId() == R.id.currencies_spinner2 ) {
-            stringCurrency2 = parent.getItemAtPosition(pos).toString().substring(0,3);
             integerCurrency2 = pos;
-            EditText editText1 = findViewById(R.id.input_value1);   // target
-            EditText editText2 = findViewById(R.id.input_value2);   // source
-            String input = editText2.getText().toString();
-            editText1.setText( getTextForEditText(input, 2) );
         }
+        EditText editText1 = findViewById(R.id.input_value);
+        String input = editText1.getText().toString();
+        TextView textView = findViewById(R.id.result);
+        textView.setText( getTextForEditText(input) );
     }
     public void onNothingSelected(AdapterView<?> parent) { }
 
@@ -317,13 +323,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     * Returns the text for the target EditText field.
+     * Returns the text for the target TextView field.
      *
      * @param input         String included the text of the EditText
-     * @param direction     Integer; 1 => conversion top to down; 2 => conversion down to top
      * @return              String
      */
-    public String getTextForEditText(String input, Integer direction) {
+    public String getTextForEditText(String input) {
         Double from;
         Double result;
         Double currencyRate = null;
@@ -332,11 +337,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (input.length() > 0 && integerCurrency1 != null && integerCurrency2 != null) {
             from = Double.parseDouble(input);
             Log.d("DEBUG","intCurr1: "+integerCurrency1+" // intCurr2: " + integerCurrency2);
-            if( direction == 1) {
-                currencyRate = getCurrencyRate(integerCurrency1, integerCurrency2);
-            } else if (direction == 2) {
-                currencyRate = getCurrencyRate(integerCurrency2, integerCurrency1);
-            }
+            currencyRate = getCurrencyRate(integerCurrency1, integerCurrency2);
             if (currencyRate == 0.0) {
                 result = roundTwoDecimals(from);
             } else {
